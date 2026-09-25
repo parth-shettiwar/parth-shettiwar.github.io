@@ -102,6 +102,28 @@ class PortfolioTests(unittest.TestCase):
             if tag == "use":
                 self.assertIn(attrs["href"][1:], self.ids)
 
+    def test_dark_mode_support(self):
+        css = (ROOT / "stylesheet.css").read_text(encoding="utf-8")
+        self.assertIn("prefers-color-scheme: dark", css)
+        self.assertIn('html[data-theme="dark"]', css)
+        self.assertIn("--bg:", css)
+        self.assertIn('class="theme-toggle"', self.source)
+        self.assertIn('aria-label="Toggle dark mode"', self.source)
+        self.assertIn("localStorage", self.source)
+        for symbol in ["icon-sun", "icon-moon"]:
+            self.assertIn(f'id="{symbol}"', self.source)
+        for tag, attrs in self.page.elements:
+            if tag == "use" and attrs.get("href") in ("#icon-sun", "#icon-moon"):
+                self.assertIn(attrs["href"][1:], self.ids)
+        # The early theme script must run before the stylesheet to avoid a flash.
+        self.assertLess(self.source.index("dataset.theme"),
+                        self.source.index('<link rel="stylesheet"'))
+
+    def test_hobbies_intro(self):
+        for phrase in ["pickleball", "badminton", "rated table tennis player",
+                       "30+ US national parks", "15+ countries"]:
+            self.assertIn(phrase, self.source)
+
     def test_legacy_bookmarks_and_reduced_motion(self):
         for old in ["Research Experience", "Projects", "Coding Skills", "Contact"]:
             self.assertIn(f'"{old}":', self.source)

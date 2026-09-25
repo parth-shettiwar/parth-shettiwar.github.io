@@ -6,6 +6,16 @@
   <meta name="author" content="Parth Shettiwar">
   <meta name="description" content="Parth Shettiwar, AI Engineer at LinkedIn. Recommendation systems, generative AI, agentic systems, and research in computer vision and bandit algorithms.">
   <title>Parth Shettiwar | AI Engineer</title>
+  <script>
+    // Apply the saved or system theme before first paint to avoid a flash.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="stylesheet.css">
   <link rel="icon" type="image/jpeg" href="images2/logo.jpeg">
 </head>
@@ -31,6 +41,15 @@
         <path d="M14 2H5v20h14V7zM14 2v5h5M8 12h8M8 16h8"></path>
       </g>
     </symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+    </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+      </g>
+    </symbol>
   </svg>
   <a class="skip-link" href="#main">Skip to content</a>
   <nav class="site-nav" aria-label="Main navigation">
@@ -42,6 +61,10 @@
     <a href="#Awards">Awards</a>
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
+    <button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode">
+      <svg class="theme-icon icon-moon" aria-hidden="true" focusable="false"><use href="#icon-moon"></use></svg>
+      <svg class="theme-icon icon-sun" aria-hidden="true" focusable="false"><use href="#icon-sun"></use></svg>
+    </button>
   </nav>
 
   <main id="main">
@@ -51,7 +74,8 @@
         <h1>Parth Shettiwar</h1>
         <p>I build machine learning systems that connect research with real-world impact. At <strong>LinkedIn’s Notifications-AI team</strong>, I work on recommendation systems, sequential user modeling, and Transformer-based generative recommenders.</p>
         <p>Previously, I built multi-agent conversational AI at <strong>DoorDash</strong> and production RAG pipelines for healthcare documents at <strong>HiLabs</strong>. My interests span generative AI, natural language processing, computer vision, graph networks, and bandit algorithms.</p>
-        <p>I hold an MS in Computer Science from <a href="https://www.ucla.edu/">UCLA</a> and a B.Tech in Electrical Engineering with honors from <a href="https://www.iitb.ac.in/">IIT Bombay</a>, with minors in Computer Science and AI &amp; Data Science. Outside work, I enjoy table tennis and following cricket.</p>
+        <p>I hold an MS in Computer Science from <a href="https://www.ucla.edu/">UCLA</a> and a B.Tech in Electrical Engineering with honors from <a href="https://www.iitb.ac.in/">IIT Bombay</a>, with minors in Computer Science and AI &amp; Data Science.</p>
+        <p>Outside work, I play racket sports — pickleball, tennis, and badminton — and I was a rated table tennis player. I also love to travel: 30+ US national parks and 15+ countries so far.</p>
         <div class="profile-links" aria-label="Profile links">
           <a href="https://github.com/parth-shettiwar"><svg class="social-icon" aria-hidden="true" focusable="false"><use href="#icon-github"></use></svg>GitHub</a>
           <a href="https://www.linkedin.com/in/parth-shettiwar-75a4a0167/"><svg class="social-icon" aria-hidden="true" focusable="false"><use href="#icon-linkedin"></use></svg>LinkedIn</a>
@@ -549,6 +573,22 @@
     }
     window.addEventListener("hashchange", scrollToLegacySection);
     scrollToLegacySection();
+
+    // Dark mode toggle, persisted per visitor.
+    const themeToggle = document.querySelector(".theme-toggle");
+    if (themeToggle) {
+      const syncThemeToggle = () => {
+        const dark = document.documentElement.dataset.theme === "dark";
+        themeToggle.setAttribute("aria-pressed", dark ? "true" : "false");
+      };
+      themeToggle.addEventListener("click", () => {
+        const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem("theme", next); } catch (e) {}
+        syncThemeToggle();
+      });
+      syncThemeToggle();
+    }
   </script>
 </body>
 </html>
