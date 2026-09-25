@@ -87,6 +87,21 @@ class PortfolioTests(unittest.TestCase):
         self.assertNotIn("revolvermaps", self.source)
         self.assertNotIn("<iframe", self.source)
 
+    def test_scholar_link_and_decorative_social_icons(self):
+        scholar = "https://scholar.google.com/citations?user=Ne4T5JYAAAAJ&hl=en"
+        links = [attrs.get("href") for tag, attrs in self.page.elements if tag == "a"]
+        self.assertIn(scholar, links)
+        self.assertIn("Google Scholar", self.source.split('<section id="contact"', 1)[1])
+        icons = [attrs for tag, attrs in self.page.elements
+                 if tag == "svg" and attrs.get("class") == "social-icon"]
+        self.assertEqual(len(icons), 8)
+        for attrs in icons:
+            self.assertEqual(attrs.get("aria-hidden"), "true")
+            self.assertEqual(attrs.get("focusable"), "false")
+        for tag, attrs in self.page.elements:
+            if tag == "use":
+                self.assertIn(attrs["href"][1:], self.ids)
+
     def test_legacy_bookmarks_and_reduced_motion(self):
         for old in ["Research Experience", "Projects", "Coding Skills", "Contact"]:
             self.assertIn(f'"{old}":', self.source)

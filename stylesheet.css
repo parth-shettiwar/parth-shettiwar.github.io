@@ -113,6 +113,9 @@ img { display: block; max-width: 100%; height: auto; }
 .eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 10px; }
 .portrait img { width: 100%; border-radius: 10px; border: 1px solid var(--line); }
 .profile-links { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 14px; font-weight: 700; margin-top: 20px; }
+.profile-links a { display: inline-flex; align-items: center; gap: 7px; }
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.social-icon { width: 17px; height: 17px; flex: 0 0 17px; fill: currentColor; }
 section { padding-top: 38px; }
 .section-heading { border-bottom: 1px solid var(--line); padding-bottom: 15px; margin-bottom: 8px; }
 .section-heading p { color: var(--muted); font-size: 14px; margin: 8px 0 0; }
