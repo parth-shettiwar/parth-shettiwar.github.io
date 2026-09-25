@@ -121,7 +121,7 @@ class PortfolioTests(unittest.TestCase):
 
     def test_hobbies_intro(self):
         for phrase in ["pickleball", "badminton", "rated table tennis player",
-                       "30+ US national parks", "15+ countries"]:
+                       "30+ US national parks", "15+ countries", "you'll probably find me"]:
             self.assertIn(phrase, self.source)
 
     def test_legacy_bookmarks_and_reduced_motion(self):
